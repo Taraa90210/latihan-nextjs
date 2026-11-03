@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { events, rupiah } from "@/data/events";
-import Link from "next/link";
+import FormPesan from "@/components/FormPesan";
+import TombolFavorit from "@/components/TombolFavorit";
 
 export default async function Detail({ params }: PageProps<"/event/[id]">) {
   const { id } = await params;
@@ -10,14 +11,6 @@ export default async function Detail({ params }: PageProps<"/event/[id]">) {
   const sisa = event.kuota - event.terisi;
   return (
     <article className="rounded-xl border bg-white p-6">
-      <div>
-        <Link
-          href="/event"
-          className="mb-4 inline-block rounded border px-3 py-1.5 text-sm hover:bg-slate-100"
-        >
-          ← Kembali ke daftar event
-        </Link>
-      </div>
       <span className="rounded bg-blue-100 px-2 py-0.5 text-xs text-blue-700">
         {event.kategori}
       </span>
@@ -26,9 +19,9 @@ export default async function Detail({ params }: PageProps<"/event/[id]">) {
         {event.tanggal} • {event.lokasi}
       </p>
       <p className="mt-4 text-xl font-semibold">{rupiah(event.harga)}</p>
-      <p className="text-slate-600">
-        Sisa {sisa} dari {event.kuota} tiket
-      </p>
+      <p className="text-slate-600">Sisa {sisa} dari {event.kuota} tiket</p>
+      <TombolFavorit id={event.id}/>
+      <FormPesan event={event}/>
     </article>
   );
 }

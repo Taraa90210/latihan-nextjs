@@ -1,9 +1,9 @@
 export type Event = {
   id: number;
-  judul: String;
-  kategori: String;
-  tanggal: String;
-  lokasi: String;
+  judul: string;
+  kategori: string;
+  tanggal: string;
+  lokasi: string;
   harga: number;
   kuota: number;
   terisi: number;
