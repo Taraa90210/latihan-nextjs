@@ -1,14 +1,31 @@
 import Link from "next/link";
 import { rupiah, type Event } from "@/data/events";
+import Image from "next/image";
 
 export default function KartuEvent({ event }: { event: Event }) {
   const sisa = event.kuota - event.terisi;
+  const laris = event.terisi / event.kuota >= 0.5;
+
   return (
     <div className="rounded-xl border bg-white p-4 shadow-sm">
+      <Image
+        src={event.gambar ?? "/img/default.png"}
+        alt={event.judul}
+        width={400}
+        height={210}
+        className="mb-3 rounded-lg"
+      />
       <span className="rounded bg-blue-100 px-2 py-0.5 text-xs text-blue-700">
         {event.kategori}
       </span>
-      <h3 className="mt-2 text-lg font-semibold text-gray-400">{event.judul}</h3>
+      {laris && (
+        <span className="ml-2 rounded bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
+          Laris
+        </span>
+      )}
+      <h3 className="mt-2 text-lg font-semibold text-gray-400">
+        {event.judul}
+      </h3>
       <p className="text-sm text-slate-500">
         {event.tanggal} • {event.lokasi}
       </p>

@@ -4,6 +4,7 @@ export type Event = {
   kategori: string;
   tanggal: string;
   lokasi: string;
+  gambar?: string;
   harga: number;
   kuota: number;
   terisi: number;
@@ -16,6 +17,7 @@ export const events: Event[] = [
     kategori: "Workshop",
     tanggal: "2026-11-14",
     lokasi: "Lab RPL",
+    gambar:"/img/event-1.png",
     harga: 50000,
     kuota: 30,
     terisi: 12,
@@ -26,6 +28,7 @@ export const events: Event[] = [
     kategori: "Olahraga",
     tanggal: "2026-11-20",
     lokasi: "Lapangan Sekolah",
+    gambar:"/img/event-2.png",
     harga: 0,
     kuota: 20,
     terisi: 20,
@@ -36,6 +39,7 @@ export const events: Event[] = [
     kategori: "Musik",
     tanggal: "2026-11-27",
     lokasi: "Aula",
+    gambar:"/img/event-3.png",
     harga: 25000,
     kuota: 150,
     terisi: 96,
@@ -46,6 +50,7 @@ export const events: Event[] = [
     kategori: "Bazar",
     tanggal: "2026-12-03",
     lokasi: "Halaman Depan",
+    gambar:"/img/event-4.png",
     harga: 0,
     kuota: 300,
     terisi: 41,
@@ -56,6 +61,7 @@ export const events: Event[] = [
     kategori: "Workshop",
     tanggal: "2026-12-05",
     lokasi: "Lab Multimedia",
+    gambar:"/img/event-5.png",
     harga: 35000,
     kuota: 25,
     terisi: 25,
@@ -66,20 +72,21 @@ export const events: Event[] = [
     kategori: "Lomba",
     tanggal: "2026-12-10",
     lokasi: "Aula",
+    gambar:"/img/event-6.png",
     harga: 10000,
     kuota: 60,
     terisi: 18,
   },
-  {
-    id: 7,
-    judul: "Lomba Makan",
-    kategori: "Lomba",
-    tanggal: "2026-12-20",
-    lokasi: "Aula",
-    harga: 15000,
-    kuota: 12,
-    terisi: 9,
-  },
+  // {
+  //   id: 7,
+  //   judul: "Lomba Makan",
+  //   kategori: "Lomba",
+  //   tanggal: "2026-12-20",
+  //   lokasi: "Aula",
+  //   harga: 15000,
+  //   kuota: 13,
+  //   terisi: 9,
+  // },
 ];
 
 export function rupiah(n: number) {
