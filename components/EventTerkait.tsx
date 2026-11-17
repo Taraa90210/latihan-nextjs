@@ -10,7 +10,7 @@ export default async function EventTerkait({ event }: { event: Event }) {
         <ul className="mt-1 space-y-1">
             {terkait.map((e) => (
                 <li key={e.id}>
-                    <Link href={`/event/${e.id}`} className="text-slate-500"></Link>
+                    <Link href={`/event/${e.id}`} className="text-slate-500">{e.judul}</Link>
                 </li>
             ))}
         </ul>

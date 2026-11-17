@@ -1,22 +1,53 @@
-import { events, type Event } from "./events";
+import { supabase } from "@/lib/supabase";
+import { supabaseAdmin } from "@/lib/supabase-admin";
+import type { Event } from "@/data/events";
 
-function jeda(ms: number) {
-  return new Promise((r) => setTimeout(r, ms));
+export async function ambilEvents(): Promise<Event[]> {
+  const { data, error } = await supabase
+    .from("events")
+    .select("*")
+    .order("tanggal");
+  if (error) throw new Error("Gagal memuat event: " + error.message);
+  return data as Event[];
 }
 
-export async function ambilEvents() {
-  await jeda(1500);
-  return events;
+export async function ambilEventsPreview(): Promise<Event[]> {
+  const { data, error } = await supabase
+    .from("events")
+    .select("*")
+    .order("tanggal")
+    .limit(3);
+  if (error) throw new Error("Gagal memuat event: " + error.message);
+  return data as Event[];
 }
 
-export async function ambilEvent(id: number) {
-  await jeda(800);
-  return events.find((e) => e.id === id);
+export async function ambilEvent(id: number): Promise<Event | null> {
+  if (!Number.isInteger(id)) return null;
+  const { data, error } = await supabase
+    .from("events")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+  if (error) throw new Error("Gagal memuat event: " + error.message);
+  return data as Event | null;
 }
 
-export async function ambilTerkait(event: Event) {
-  await jeda(2000);
-  return events.filter(
-    (e) => e.kategori === event.kategori && e.id !== event.id,
-  );
+export async function ambilTerkait(event: Event): Promise<Event[]> {
+  const { data, error } = await supabase
+    .from("events")
+    .select("*")
+    .eq("kategori", event.kategori)
+    .neq("id", event.id)
+    .order("tanggal");
+  if (error) throw new Error("Gagal memuat terkait: " + error.message);
+  return data as Event[];
+}
+
+export async function hitungPesanan(eventId: number): Promise<number> {
+  const { count, error } = await supabase
+    .from("pesanan")
+    .select("*", {count: "exact", head: true})
+    .eq("event_id", eventId);
+    if (error) throw new Error("Gagal menghitung pesanan: " + error.message);
+    return count ?? 0;
 }

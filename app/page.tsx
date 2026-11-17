@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { events } from "@/data/events";
+import { ambilEvents, ambilEventsPreview } from "@/data/ambil";
 import KartuEvent from "@/components/KartuEvent";
 
-export default function Beranda() {
-  const terdekat = events.slice(0, 3);
+export default async function Beranda() {
+  const semua = await ambilEventsPreview();
+  const terdekat = semua;
   return (
     <div>
       <section className="py-12 text-center">
