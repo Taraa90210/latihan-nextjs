@@ -1,4 +1,3 @@
-import { events } from "@/data/events";
 import { ambilEvent } from "@/data/ambil";
 export async function GET(
   _req: Request,

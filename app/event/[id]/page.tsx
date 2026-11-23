@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { rupiah } from "@/data/events";
-import { ambilEvent, hitungPesanan } from "@/data/ambil";
+import { ambilEvent } from "@/data/ambil";
 import FormPesan from "@/components/FormPesan";
 import TombolFavorit from "@/components/TombolFavorit";
 import EventTerkait from "@/components/EventTerkait"
@@ -24,7 +24,6 @@ export default async function Detail({ params }: PageProps<"/event/[id]">) {
   const event = await ambilEvent(Number(id));
   if (!event) notFound();
 
-  const jumlahPesanan = await hitungPesanan(event.id);
   const sisa = event.kuota - event.terisi;
   const namaAwal = (await cookies()).get("nama")?.value ?? "";
   return (

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ambilEvents, ambilEventsPreview } from "@/data/ambil";
+import { ambilEventsPreview } from "@/data/ambil";
 import KartuEvent from "@/components/KartuEvent";
 
 export default async function Beranda() {

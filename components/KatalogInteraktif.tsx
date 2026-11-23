@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { rupiah, type Event } from "@/data/events";
 import KartuEvent from "./KartuEvent";
 import KontrolKatalog from "./KontrolKatalog";
@@ -7,11 +7,12 @@ import KontrolKatalog from "./KontrolKatalog";
 export default function KatalogInteraktif({ events }: { events: Event[] }) {
   const [cari, setCari] = useState("");
   const [kategori, setKategori] = useState("Semua");
-  const [urut, setUrut] = useState("tanggal");
-  useEffect(() => {
-    const simpan = localStorage.getItem("urut");
-    if (simpan) setUrut(simpan);
-  }, []);
+  const [urut, setUrut] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("urut") ?? "tanggal";
+    }
+    return "tanggal";
+  });
 
   const [hanyaTersedia, setHanyaTersedia] = useState(false);
   const [hargaMaks, setHargaMaks] = useState("");
@@ -40,26 +41,18 @@ export default function KatalogInteraktif({ events }: { events: Event[] }) {
     tersusun.length > 0 ? Math.round(totalHarga / tersusun.length) : 0;
   const totalSisa = tersusun.reduce((sum, e) => sum + (e.kuota - e.terisi), 0);
 
-  function handleSetCari(v: string) { setCari(v); reset(); }
-  function handleSetKategori(v: string) { setKategori(v); reset(); }
-  function handleSetUrut(v: string) {
-    setUrut(v);
-    localStorage.setItem("urut", v);
-    reset();
-  }
-  function handleSetHanyaTersedia(v: boolean) { setHanyaTersedia(v); reset(); }
-  function handleSetHargaMaks(v: string) { setHargaMaks(v); reset(); }
+  const s = {
+    cari,
+    kategori,
+    urut,
+    sisa: hanyaTersedia,
+    max: hargaMaks !== "" ? Number(hargaMaks) : null,
+    hal: 1,
+  };
 
   return (
     <div>
-      <KontrolKatalog
-        cari={cari} setCari={handleSetCari}
-        kategori={kategori} setKategori={handleSetKategori}
-        daftarKategori={daftarKategori}
-        urut={urut} setUrut={handleSetUrut}
-        hanyaTersedia={hanyaTersedia} setHanyaTersedia={handleSetHanyaTersedia}
-        hargaMaks={hargaMaks} setHargaMaks={handleSetHargaMaks}
-      />
+      <KontrolKatalog s={s} daftarKategori={daftarKategori} />
       <p className="text-sm text-slate-500">
         {tersusun.length} event ditemukan
       </p>
